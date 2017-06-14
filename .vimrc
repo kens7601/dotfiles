@@ -1,81 +1,69 @@
-" vim-bootstrap 86e5925
+set nocompatible               " Be iMproved
 
-"*****************************************************************************
-"" Vim-PLug core
-"*****************************************************************************
-if has('vim_starting')
-  set nocompatible               " Be iMproved
-endif
+set autowrite
+filetype off
 
-let vimplug_exists=expand('~/.vim/autoload/plug.vim')
-
-let g:vim_bootstrap_langs = "javascript,lisp,perl,python"
-let g:vim_bootstrap_editor = "vim"				" nvim or vim
-
-if !filereadable(vimplug_exists)
-  if !executable("curl")
-    echoerr "You have to install curl or first install vim-plug yourself!"
-    execute "q!"
-  endif
-  echo "Installing Vim-Plug..."
-  echo ""
-  silent !\curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  let g:not_finish_vimplug = "yes"
-
-  autocmd VimEnter * PlugInstall
-endif
+set rtp+=~/.vim/bundle/Vundle.vim
 
 " Required:
-call plug#begin(expand('~/.vim/plugged'))
+call vundle#begin()
+
 
 "*****************************************************************************
-"" Plug install packages
+"" Plugin install packages
 "*****************************************************************************
-Plug 'Shougo/unite.vim'
-Plug 'junegunn/vim-easy-align' 
-Plug 'scrooloose/nerdtree'
-Plug 'jistr/vim-nerdtree-tabs'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'airblade/vim-gitgutter'
-Plug 'vim-scripts/grep.vim'
-Plug 'vim-scripts/CSApprox'
-Plug 'bronson/vim-trailing-whitespace'
-Plug 'Raimondi/delimitMate'
-Plug 'majutsushi/tagbar'
-Plug 'scrooloose/syntastic'
-Plug 'Yggdroot/indentLine'
-Plug 'avelino/vim-bootstrap-updater'
-Plug 'sheerun/vim-polyglot'
-Plug 'mhinz/vim-startify'
-if isdirectory('/usr/local/opt/fzf')
-  Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
-else
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
-  Plug 'junegunn/fzf.vim'
-endif
-let g:make = 'gmake'
-if exists('make')
-        let g:make = 'make'
-endif
-Plug 'Shougo/vimproc.vim', {'do': g:make}
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
 
+Plugin 'Shougo/unite.vim'
+Plugin 'junegunn/vim-easy-align' 
+Plugin 'Fortune-vimtips'
+Plugin 'AndrewRadev/splitjoin.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-fugitive'
+Plugin 'szw/vim-g'
+Plugin 'kurkale6ka/vim-pairs'
+Plugin 'farazdagi/vim-go-ide'
+Plugin 'mileszs/ack.vim'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'gregsexton/gitv'
+Plugin 'godlygeek/csapprox'
+Plugin 'corntrace/bufexplorer'
+Plugin 'rbgrouleff/bclose.vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'vim-scripts/grep.vim'
+Plugin 'vim-scripts/CSApprox'
+Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'Raimondi/delimitMate'
+Plugin 'majutsushi/tagbar'
+Plugin 'scrooloose/syntastic'
+Plugin 'Yggdroot/indentLine'
+Plugin 'avelino/vim-bootstrap-updater'
+Plugin 'sheerun/vim-polyglot'
+Plugin 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/bundle/gocode/vim/symlink.sh' }
+Plugin 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+Plugin 'Shougo/neocomplete.vim'
+Plugin 'Shougo/neosnippet'
+Plugin 'jiangmiao/auto-pairs'
 "" Vim-Session
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-session'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-session'
 
 if v:version >= 703
-  Plug 'Shougo/vimshell.vim'
+  Plugin 'Shougo/vimshell.vim'
+  Plugin 'Shougo/Vimproc.vim'
 endif
 
 if v:version >= 704
   "" Snippets
-  Plug 'SirVer/ultisnips'
+  Plugin 'SirVer/ultisnips'
 endif
 
-Plug 'honza/vim-snippets'
+Plugin 'honza/vim-snippets'
 
 "*****************************************************************************
 "" Custom bundles
@@ -83,35 +71,21 @@ Plug 'honza/vim-snippets'
 
 " javascript
 "" Javascript Bundle
-Plug 'jelera/vim-javascript-syntax'
-
-
-" lisp
-"" Lisp Bundle
-Plug 'vim-scripts/slimv.vim'
+Plugin 'jelera/vim-javascript-syntax'
 
 
 " perl
 "" Perl Bundle
-Plug 'vim-perl/vim-perl'
-Plug 'c9s/perlomni.vim'
+Plugin 'vim-perl/vim-perl'
+Plugin 'c9s/perlomni.vim'
 
 
 " python
 "" Python Bundle
-Plug 'davidhalter/jedi-vim'
-Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
+Plugin 'davidhalter/jedi-vim'
+Plugin 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 
-
-"*****************************************************************************
-"*****************************************************************************
-
-"" Include user's extra bundle
-if filereadable(expand("~/.vimrc.local.bundles"))
-  source ~/.vimrc.local.bundles
-endif
-
-call plug#end()
+call vundle#end()
 
 " Required:
 filetype plugin indent on
@@ -282,13 +256,6 @@ let Grep_Skip_Dirs = '.git node_modules'
 " vimshell.vim
 let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
 let g:vimshell_prompt =  '$ '
-
-" terminal emulation
-if g:vim_bootstrap_editor == 'nvim'
-  nnoremap <silent> <leader>sh :terminal<CR>
-else
-  nnoremap <silent> <leader>sh :VimShellCreate<CR>
-endif
 
 "*****************************************************************************
 "" Functions
@@ -559,3 +526,6 @@ else
   let g:airline_symbols.readonly = ''
   let g:airline_symbols.linenr = ''
 endif
+
+nnoremap <silent> <Leader>bd :Bclose<CR>
+
